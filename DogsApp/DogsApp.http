@@ -1,0 +1,6 @@
+@DogsApp_HostAddress = http://localhost:5098
+
+GET {{DogsApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
