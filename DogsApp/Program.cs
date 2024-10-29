@@ -1,4 +1,6 @@
 using DataAccess;
+using DataAccess.Interfaces;
+using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DogsAppDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
+
+builder.Services.AddScoped<IDogsRepository, DogsRepository>();
 
 var app = builder.Build();
 
