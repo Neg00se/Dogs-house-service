@@ -19,6 +19,13 @@ public class DogsRepository : IDogsRepository
         return dogs;
     }
 
+    public async Task<IEnumerable<Dog>> GetDogsAsync(int pageNumber, int rowCount)
+    {
+        var dogs = await _context.Dogs.Skip((pageNumber - 1) * rowCount).Take(rowCount).ToListAsync();
+
+        return dogs;
+    }
+
     public async Task AddDogAsync(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
