@@ -1,7 +1,10 @@
 using BusinessLogic;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
+using DogsApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +23,11 @@ builder.Services.AddDbContext<DogsAppDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutomapperProfile));
 
 builder.Services.AddScoped<IDogsRepository, DogsRepository>();
+builder.Services.AddScoped<IDogsService, DogsService>();
+
+builder.Services.AddExceptionHandler<DbExceptionHandler>();
+builder.Services.AddExceptionHandler<ArgumentOutOfRangeExceptionHandler>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -29,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(opts => { });
 
 app.UseHttpsRedirection();
 
