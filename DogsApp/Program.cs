@@ -1,3 +1,4 @@
+using BusinessLogic;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
@@ -11,8 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddDbContext<DogsAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
+
+builder.Services.AddAutoMapper(typeof(AutomapperProfile));
 
 builder.Services.AddScoped<IDogsRepository, DogsRepository>();
 
