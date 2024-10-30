@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 
 namespace BusinessLogic.Services;
-public class DogsService
+public class DogsService : IDogsService
 {
     private readonly IDogsRepository _dogsRepo;
     private readonly IMapper _mapper;
@@ -28,6 +29,10 @@ public class DogsService
                     var dogs = Sort(dogList, query.SortBy, query.IsDescending);
                     return dogs;
                 }
+
+                var dogModel = _mapper.Map<IEnumerable<DogModel>>(dogList);
+                return dogModel;
+
             }
 
             if (!string.IsNullOrWhiteSpace(query.SortBy))
@@ -73,7 +78,7 @@ public class DogsService
             var dogs = _mapper.Map<IEnumerable<DogModel>>(sortedDogs);
             return dogs;
         }
-        if (sortBy.Equals("wieght", StringComparison.OrdinalIgnoreCase))
+        if (sortBy.Equals("weight", StringComparison.OrdinalIgnoreCase))
         {
             var sortedDogs = isDescending ? dogsList.OrderByDescending(s => s.Weight) : dogsList.OrderBy(s => s.Weight);
             var dogs = _mapper.Map<IEnumerable<DogModel>>(sortedDogs);

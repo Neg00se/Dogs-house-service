@@ -21,7 +21,7 @@ public class DogModel
         {
             if (value < 0)
             {
-                throw new ArgumentOutOfRangeException("tail length cant be negative");
+                throw new ArgumentOutOfRangeException(nameof(TailLength), "tail length cant be negative");
             }
             _length = value;
         }
@@ -30,11 +30,12 @@ public class DogModel
     [Required]
     public int Weight
     {
-        get => _weight; set
+        get { return _weight; }
+        set
         {
             if (value <= 0)
             {
-                throw new ArgumentOutOfRangeException("Weight cant be equal zero or less");
+                throw new ArgumentOutOfRangeException(nameof(Weight), "Weight cant be equal zero or less");
             }
             _weight = value;
         }
