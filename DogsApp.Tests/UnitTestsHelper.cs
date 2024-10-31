@@ -1,4 +1,6 @@
-﻿using DataAccess;
+﻿using AutoMapper;
+using BusinessLogic;
+using DataAccess;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,14 @@ internal static class UnitTestsHelper
         }
 
         return dbcontext;
+    }
+
+    public static IMapper CreateMapperProfile()
+    {
+        var myProfile = new AutomapperProfile();
+        var config = new MapperConfiguration(c => c.AddProfile(myProfile));
+
+        return new Mapper(config);
     }
 
     private async static void SeedData(DogsAppDbContext context)

@@ -8,7 +8,7 @@ public class DogsRepositoryTests
 {
 
     [Fact]
-    public async void DogsRepository_GetDogsAsync_ReturnsDogs()
+    public async Task DogsRepository_GetDogsAsync_ReturnsDogs()
     {
         //Arrange
 
@@ -27,7 +27,7 @@ public class DogsRepositoryTests
     }
 
     [Fact]
-    public async void DogsRepository_GetDogsAsync_WithPageSize1_ReturnsFirstDog()
+    public async Task DogsRepository_GetDogsAsync_WithPageSize1_ReturnsFirstDog()
     {
         //Arrange
 
@@ -47,7 +47,7 @@ public class DogsRepositoryTests
     }
 
     [Fact]
-    public async void DogsRepository_AddDogAsync_AddsValueToDb()
+    public async Task DogsRepository_AddDogAsync_AddsValueToDb()
     {
         //Arrange
 

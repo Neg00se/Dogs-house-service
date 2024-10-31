@@ -16,7 +16,7 @@ public class DogsService : IDogsService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<DogModel>> GetDogsAsync(QueryModel query)
+    public async Task<IEnumerable<DogModel>> GetDogsAsync(QueryModel? query)
     {
         if (query is not null)
         {
