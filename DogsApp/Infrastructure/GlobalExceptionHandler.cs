@@ -15,7 +15,11 @@ public class GlobalExceptionHandler : IExceptionHandler
             Detail = exception.Message,
         };
 
+        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        httpContext.Response.ContentType = "application/json";
+
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+
 
         return true;
     }

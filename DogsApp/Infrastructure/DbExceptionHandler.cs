@@ -16,9 +16,10 @@ public class DbExceptionHandler : IExceptionHandler
             {
                 Status = StatusCodes.Status400BadRequest,
                 Title = "Wrong parameter values cant be written to db",
-
+                Detail = "You providing invalid values, that cant be written to db, please wether change name or check if weight and teil length correct"
             };
-
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            httpContext.Response.ContentType = "application/json";
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
             return true;

@@ -15,9 +15,10 @@ public class ArgumentOutOfRangeExceptionHandler : IExceptionHandler
                 Title = "Invalid value",
                 Detail = exception.Message,
             };
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            httpContext.Response.ContentType = "application/json";
 
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
             return true;
         }
 
