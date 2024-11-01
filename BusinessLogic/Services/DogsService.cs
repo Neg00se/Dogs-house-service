@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
+using BusinessLogic.Validation;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 
@@ -53,6 +54,15 @@ public class DogsService : IDogsService
 
     public async Task AddAsync(DogModel model)
     {
+
+
+        var existingDog = _dogsRepo.GetDogByName(model.Name);
+        if (existingDog is not null)
+        {
+            throw new AlreadyExistException("dog with this name is already exist");
+        }
+
+
         Dog dog = _mapper.Map<Dog>(model);
 
         await _dogsRepo.AddDogAsync(dog);
