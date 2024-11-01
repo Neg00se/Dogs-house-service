@@ -5,7 +5,9 @@ using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using DogsApp.Infrastructure;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,18 @@ builder.Services.AddExceptionHandler<DbExceptionHandler>();
 builder.Services.AddExceptionHandler<ArgumentOutOfRangeExceptionHandler>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+builder.Services.AddRateLimiter(limiterOptions =>
+{
+    limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    limiterOptions.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(1);
+        options.PermitLimit = 10;
+        options.QueueLimit = 5;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +53,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler(opts => { });
+
+app.UseRateLimiter();
 
 app.UseHttpsRedirection();
 
