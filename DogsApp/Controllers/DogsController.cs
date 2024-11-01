@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
+using BusinessLogic.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DogsApp.Controllers;
@@ -35,7 +36,7 @@ public class DogsController : ControllerBase
             await _dogService.AddAsync(dog);
             return Ok();
         }
-        catch (ArgumentOutOfRangeException ex)
+        catch (AlreadyExistException ex)
         {
 
             return BadRequest(ex.Message);
