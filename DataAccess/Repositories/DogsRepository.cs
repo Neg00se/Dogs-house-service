@@ -26,6 +26,12 @@ public class DogsRepository : IDogsRepository
         return dogs;
     }
 
+    public async Task<Dog> GetDogByName(string name)
+    {
+        var dog = await _context.Dogs.FindAsync(name);
+        return dog;
+    }
+
     public async Task AddDogAsync(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
