@@ -56,7 +56,7 @@ public class DogsService : IDogsService
     {
 
 
-        var existingDog = _dogsRepo.GetDogByName(model.Name);
+        var existingDog = await _dogsRepo.GetDogByName(model.Name);
         if (existingDog is not null)
         {
             throw new AlreadyExistException("dog with this name is already exist");
